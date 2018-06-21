@@ -48,7 +48,30 @@ namespace BinarySearchTree
             }
             if (newValue == currentNode.Value)
             {
+                Console.WriteLine("This value is already present.");
+            }
+        }
 
+        public Node Search (int value)
+        {
+            Node foundNode;
+            SearchTree(root, value);
+            
+        }
+        public void SearchTree (Node currentNode, int value)
+        {
+            if (currentNode.Value == value)
+            {
+                
+            }
+            if (value > currentNode.Value)
+            {
+                SearchTree(currentNode.RightChild, value);
+            }
+            else if (value < currentNode.Value)
+            {
+                SearchTree(currentNode.LeftChild, value);
+                
             }
         }
     }
