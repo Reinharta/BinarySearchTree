@@ -24,11 +24,65 @@ namespace BinarySearchTree
         }
 
 
+        // NON-RECURSIVE ADD()
+
+
+        //public void Add(int newValue)
+        //{
+        //    bool added = false;
+        //    if(root == null)
+        //    {
+        //        Node newNode = new Node(newValue);
+        //        root = newNode;
+        //        added = true;
+        //        return;
+        //    }
+
+        //    Node currentNode = root;
+        //    while (added == false)
+        //    {
+        //        if (newValue == currentNode.Value)
+        //        {
+        //            Console.WriteLine("{0} is already present.", newValue);
+        //            return;
+        //        }
+        //        if (newValue < currentNode.Value)
+        //        {
+        //            if (currentNode.LeftChild == null)
+        //            {
+        //                Node newNode = new Node(newValue);
+        //                currentNode.LeftChild = newNode;
+        //                added = true;
+        //            }
+        //            else
+        //            {
+        //                currentNode = currentNode.LeftChild;
+        //            }
+        //        }
+        //        if (newValue > currentNode.Value)
+        //        {
+        //           if (currentNode.RightChild == null)
+        //            {
+        //                Node newNode = new Node(newValue);
+        //                currentNode.RightChild = newNode;
+        //                added = true;
+        //            }
+        //           else
+        //            {
+        //                currentNode = currentNode.RightChild;
+        //            }
+        //        }
+        //    }
+        //}
+
+
+        // RECURSIVE ADD()
+
         public void Add(int newValue)
         {
-            AddToTree(root, newValue);
+            AddToTree(ref root, newValue);
         }
-        private void AddToTree(Node currentNode, int newValue)
+        private void AddToTree(ref Node currentNode, int newValue)
         {
             if(currentNode == null)
             {
@@ -36,43 +90,73 @@ namespace BinarySearchTree
                 currentNode = newNode;
                 return;
             }
-            if (newValue < currentNode.Value)
+            if (newValue<currentNode.Value)
             {
-                AddToTree(currentNode.LeftChild, newValue);
+                AddToTree(ref currentNode.leftChild, newValue);
                 return;
             }
             if (newValue > currentNode.Value)
             {
-                AddToTree(currentNode.RightChild, newValue);
+                AddToTree(ref currentNode.rightChild, newValue);
                 return;
             }
             if (newValue == currentNode.Value)
             {
-                Console.WriteLine("This value is already present.");
+                Console.WriteLine("{0} is already present.", newValue);
+                return;
             }
         }
 
-        public Node Search (int value)
+
+        public bool Search (int value)
         {
-            Node foundNode;
-            SearchTree(root, value);
-            
-        }
-        public void SearchTree (Node currentNode, int value)
-        {
-            if (currentNode.Value == value)
+            bool nodeFound = false;
+            Node currentNode = root;
+
+            while (nodeFound == false)
             {
-                
-            }
-            if (value > currentNode.Value)
-            {
-                SearchTree(currentNode.RightChild, value);
-            }
-            else if (value < currentNode.Value)
-            {
-                SearchTree(currentNode.LeftChild, value);
-                
-            }
+                if (currentNode == null)
+                {
+                    return nodeFound;
+                }
+                if (value == currentNode.Value)
+                {
+                    nodeFound = true;
+                }
+                else if(value < currentNode.Value)
+                {
+                    if (currentNode.LeftChild == null)
+                    {
+                        return nodeFound;
+                    }
+                    if(currentNode.LeftChild.Value == value)
+                    {
+                        nodeFound = true;
+                    }
+                    else
+                    {
+                        currentNode = currentNode.LeftChild;
+                    }
+                }
+
+                else if(value > currentNode.Value)
+                {
+                    if(currentNode.RightChild == null)
+                    {
+                        return nodeFound;
+                    }
+                    if(currentNode.RightChild.Value == value)
+                    {
+                        nodeFound = true;
+                    }
+                    else
+                    {
+                        currentNode = currentNode.RightChild;
+                    }
+                }
+
+            } 
+            return nodeFound;
         }
     }
 }
